@@ -1,3 +1,4 @@
+swal ('Bienvenidos a Sanitarios Lope de Vega');
 //Mi clase "articulos" para luego instanciar objetos de esta clase///////////////////////////////////////////////////////
 
 class Articulos{ 
@@ -7,7 +8,7 @@ class Articulos{
         this.precio = parseInt (precio);
 
     }
-    // metodo para calcular el precio con iva//////////////////////////////////////////////////////////////////////////////
+    // metodo para calcular el precio con iva
     precioTotal() {
         return this.precio*1.21 ;
 
@@ -16,7 +17,7 @@ class Articulos{
 
 const productos = [];
 
-//Cargo mi array con push////////////////////////////////////////////////////////////////////////////////////////////////////
+//Cargo mi array con push
 productos.push(
 
     new Articulos('inodoro corto', 'ferrum', 8000),
@@ -31,7 +32,16 @@ productos.push(
     new Articulos('lavatorio+pie', 'capea', 9000)
     
 )
-    
+
+//Funcion para mostrar la lista recorriendo mi array    
+const mostrarLista = () => {
+    for (let producto of productos){    
+        let ul = document.createElement('li');
+        ul.innerText = `${producto.denominacion} ${producto.marca} ${producto.precio}`;
+        ul.setAttribute("class", "list-group-item");
+        lista.appendChild(ul);
+    }
+}
 
 console.log(productos);
 
@@ -46,6 +56,16 @@ console.log(busqueda);
 
 //capturo el click
 btn.addEventListener("click", buscar);
+btn.addEventListener("click", alerta);
+function alerta(){
+    Toastify({
+
+        text: "Buscando",
+        
+        duration: 3000
+        
+        }).showToast();
+}
 
 // traigo el contenedor del html
 const contenedorLista = document.getElementById('listaProd');
@@ -57,7 +77,7 @@ function buscar (){
     let valor = busqueda.value;
 
     if (valor.length == 0){
-        alert('campo vacío');
+        swal ('CAMPO VACÍO');
 
     }else{
         let serch = productos.filter(producto => producto.denominacion.includes(valor))
@@ -66,6 +86,8 @@ function buscar (){
         //creo el elemento
         let contenedorResultados = document.createElement("div");
         let listaResultados = document.createElement('ul');
+        listaResultados.setAttribute("class" ,"list-group");
+        
 
         //selecciono el elemento padre
         contenedorResultados.appendChild(listaResultados);
@@ -73,6 +95,7 @@ function buscar (){
 
         for(let producto of serch){
             let resultado = document.createElement('li');
+            resultado.setAttribute("class", "list-group-item");
             resultado.innerText = `${producto.denominacion} ${producto.marca} ${producto.precio}`
             listaResultados.appendChild(resultado);        
         }
@@ -95,15 +118,4 @@ function limpiar (){
 
 const lista = document.getElementById('lista');
 
-//Funcion para mostrar la lista recorriendo mi array    
-const mostrarLista = () => {
-    for (let producto of productos){    
-        let ul = document.createElement('li');
-        ul.innerText = `${producto.denominacion} ${producto.marca} ${producto.precio}`;
-        lista.appendChild(ul);
-    }
-}
-
 mostrarLista();
-
-
