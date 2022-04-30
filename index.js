@@ -1,4 +1,4 @@
-//Mi clase "articulos" para luego instanciar objetos de esta clase
+//Mi clase "articulos" para luego instanciar objetos de esta clase///////////////////////////////////////////////////////
 
 class Articulos{ 
     constructor (denominacion, marca, precio){
@@ -7,7 +7,7 @@ class Articulos{
         this.precio = parseInt (precio);
 
     }
-    // metodo para calcular el precio con iva
+    // metodo para calcular el precio con iva//////////////////////////////////////////////////////////////////////////////
     precioTotal() {
         return this.precio*1.21 ;
 
@@ -16,7 +16,7 @@ class Articulos{
 
 const productos = [];
 
-//Cargo mi array con push
+//Cargo mi array con push////////////////////////////////////////////////////////////////////////////////////////////////////
 productos.push(
 
     new Articulos('inodoro corto', 'ferrum', 8000),
@@ -47,7 +47,6 @@ console.log(busqueda);
 //capturo el click
 btn.addEventListener("click", buscar);
 
-
 // traigo el contenedor del html
 const contenedorLista = document.getElementById('listaProd');
 
@@ -56,12 +55,12 @@ function buscar (){
     console.log("clickeaste el boton");
 
     let valor = busqueda.value;
+
     if (valor.length == 0){
         alert('campo vacío');
 
-
     }else{
-        let serch = productos.filter(producto => producto.denominacion === valor)
+        let serch = productos.filter(producto => producto.denominacion.includes(valor))
         console.log(serch);
 
         //creo el elemento
@@ -71,22 +70,28 @@ function buscar (){
         //selecciono el elemento padre
         contenedorResultados.appendChild(listaResultados);
         contenedorLista.appendChild(contenedorResultados);
+
         for(let producto of serch){
             let resultado = document.createElement('li');
             resultado.innerText = `${producto.denominacion} ${producto.marca} ${producto.precio}`
-            listaResultados.appendChild(resultado);
-            // alert(`${producto.denominacion} ${producto.marca} ${producto.precio}`);
+            listaResultados.appendChild(resultado);        
         }
 
-
-    return serch;
+        return serch;
     }
-    }
+}
 
-    
-    // let ul = document.createElement('p');
-    // ul.innerText = ` - ${serch.denominacion} ${serch.marca} ${serch.precio}`;
-    // lista.appendChild(ul);
+
+//boton para limpiar: capturar el click y crear la funcion
+const contenedorResultados = document.createElement("div");
+btnLimpiar.addEventListener("click", limpiar);
+
+function limpiar (){
+    if (contenedorLista.hasChildNodes(contenedorResultados)){        
+        document.getElementById('listaProd').innerHTML= '';
+        console.log('clickeaste el boton');
+    }
+}
 
 const lista = document.getElementById('lista');
 
